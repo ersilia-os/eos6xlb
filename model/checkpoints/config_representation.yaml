@@ -1,0 +1,9 @@
+smiles_filepath: ../examples/run_input.csv              # Complete path to the file with the SMILES of the molecules. Must be a .csv file.
+smiles_colname: smiles                                            # Name of the column in --smiles_filepath that contains SMILES of the molecules.
+chemid_colname: smiles                                              # Name of the column in --smiles_filepath that contains the identifier of the molecules. If None, the index of the dataframe will be used.
+
+gpu: cpu                                                       # Name of the cuda device to run pre-trained model. Can also be 'cpu'.
+
+representation: gin_concat_R1000_E8000_lambda0.0001               # Type of molecular representation to be gathered. Can be 'MolCLR', 'ECFP4', or one of the pre-trained models in ./ckpt (only subfolder name is necessary).
+
+output_filepath: ../examples/raw_output.csv   # Complete path to the file where the molecular representation will be saved. Outputs a tsv file.

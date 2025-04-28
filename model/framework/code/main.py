@@ -2,8 +2,9 @@
 import os
 import csv
 import sys
-from rdkit import Chem
-from rdkit.Chem.Descriptors import MolWt
+import yaml
+import subprocess
+import pandas as pd
 
 # parse arguments
 input_file = sys.argv[1]
@@ -13,27 +14,23 @@ output_file = sys.argv[2]
 root = os.path.dirname(os.path.abspath(__file__))
 
 # my model
-def my_model(smiles_list):
-    return [MolWt(Chem.MolFromSmiles(smi)) for smi in smiles_list]
+subprocess.run(["python", os.path.join(root, "gather_representation.py"),
+	"--gpu", "cpu",
+	"--output_filepath", output_file,
+	"--smiles_filepath", input_file,
+	"--smiles_colname", "smiles",
+	"--chemid_colname", "smiles",
+	"--representation", "gin_concat_R1000_E8000_lambda0.0001"], 
+	stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 
-# read SMILES from .csv file, assuming one column with header
-with open(input_file, "r") as f:
-    reader = csv.reader(f)
-    next(reader)  # skip header
-    smiles_list = [r[0] for r in reader]
+# Compare SMILES input and output
+smiles_input = pd.read_csv(os.path.join(input_file), sep=',')['smiles'].tolist()
+smiles_output = pd.read_csv(os.path.join(output_file), sep=',').iloc[:, 0].tolist()
+assert smiles_input == smiles_output
 
-# run model
-outputs = my_model(smiles_list)
-
-#check input and output have the same lenght
-input_len = len(smiles_list)
-output_len = len(outputs)
-assert input_len == output_len
-
-# write output in a .csv file
-with open(output_file, "w") as f:
-    writer = csv.writer(f)
-    writer.writerow(["value"])  # header
-    for o in outputs:
-        writer.writerow([o])
+# Change output format
+output = pd.read_csv(os.path.join(output_file), sep=',')
+output = output.iloc[:, 1:]
+output.columns = [f"dim_{i:03d}" for i in range(len(output.columns))]
+output.to_csv(output_file, sep=',', index=False)

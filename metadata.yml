@@ -2,33 +2,27 @@ Identifier: eos6xlb
 Slug: mole-representations
 Status: In progress
 Title: MolE molecular representation through redundancy reduced embeddings
-Description: MolE representations (Molecular representation through redundancy reduced
-  Embeddings) are task-independent, learned molecular embeddings generated through
-  a self-supervised deep learning approach. They are designed to encode chemically
-  meaningful information about molecules without needing labeled training data.
-Source: Local, Online
-Source Type: Internal, Replicated, External
-Task: Annotation, Representation, Sampling
-Subtask: Property calculation or prediction, Activity prediction, Featurization, Projection,
-  Similarity search, Generation
-Input: Compound
+Description: 'MolE representations (Molecular representation through redundancy reduced Embeddings) are task-independent, learned molecular embeddings generated through a self-supervised deep learning approach. They are designed to encode chemically meaningful information about molecules without needing labeled training data.'
+Source: Local
+Source Type: External
+Task: Representation
+Subtask: Featurization
+Input: 
+- Compound
 Input Dimension: 1
-Output: Value, Score
-Output Dimension: 1
-Output Consistency: Fixed, Variable
-Interpretation: 'The output of this template model should be interpreted like this.
-
-  '
+Output: 
+- Descriptor
+Output Dimension: 1000
+Output Consistency: Fixed
+Interpretation: "Vector representation of a molecule"
 Tag:
-- Embedding
+- Descriptor
 Biomedical Area:
-- Biomedical Area 1
-- Biomedical Area 2
+- Any
 Target Organism:
-- Target Organism 1
-- Target Organism 2
-Publication Type: Peer reviewed, Preprint, Other
+- Not applicable
+Publication Type: Peer reviewed
 Publication Year: 2025
 Publication: https://www.nature.com/articles/s41467-025-58804-4
-Source Code: https://github.com/rolayoalarcon/mole_antimicrobial_potential/tree/main
+Source Code: https://github.com/rolayoalarcon/MolE/tree/main
 License: MIT
