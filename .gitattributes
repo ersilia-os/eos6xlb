@@ -1,1 +1,1 @@
-model/checkpoints/model.pth filter=lfs diff=lfs merge=lfs -text
+mock.txt filter=lfs diff=lfs merge=lfs -text
